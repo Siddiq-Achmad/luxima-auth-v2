@@ -1,0 +1,20 @@
+[build]
+builder = "nixpacks"
+
+[variables]
+NODE_ENV = "production"
+NIXPACKS_NODE_VERSION = "22"
+
+[phases.setup]
+nixPkgs = ["nodejs_22", "bun", "curl", "wget"]
+aptPkgs = ['build-essential']
+
+
+[phases.install]
+cmds = ["bun install"]
+
+[phases.build]
+cmds = ["bun run build"]
+
+[start]
+cmd = "bun run start"
