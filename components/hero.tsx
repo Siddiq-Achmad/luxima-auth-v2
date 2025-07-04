@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { BetterAuthLogo } from "./betterauth-logo";
 import { NextLogo } from "./next-logo";
 import { SupabaseLogo } from "./supabase-logo";
 import { ResendLogo } from "./resend-logo";

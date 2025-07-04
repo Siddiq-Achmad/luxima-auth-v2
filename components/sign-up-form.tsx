@@ -15,7 +15,6 @@ import { Label } from "@/components/ui/label";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { Resend } from "resend";
 
 export function SignUpForm({
   className,
@@ -31,7 +30,7 @@ export function SignUpForm({
   const handleSignUp = async (e: React.FormEvent) => {
     e.preventDefault();
     const supabase = createClient();
-    const resend = new Resend(process.env.RESEND_API_KEY);
+
     setIsLoading(true);
     setError(null);
 
