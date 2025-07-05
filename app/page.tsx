@@ -7,6 +7,9 @@ import { hasEnvVars } from "@/lib/utils";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { LoginForm } from "@/components/login-form";
+import { RollingText } from "@/components/animate-ui/text/rolling";
+import { TypingText } from "@/components/animate-ui/text/typing";
+import { RotatingText } from "@/components/animate-ui/text/rotating";
 
 export default function Home() {
   return (
@@ -15,7 +18,9 @@ export default function Home() {
         <nav className="w-full flex justify-center border-b border-b-foreground/10 h-16">
           <div className="w-full max-w-5xl flex justify-between items-center p-3 px-5 text-sm">
             <div className="flex gap-5 items-center font-semibold">
-              <Link href={"/"}>LUXIMA AUTH</Link>
+              <Link href={"/"}>
+                <RollingText text="LUXIMA AUTH" />
+              </Link>
               <div className="flex items-center gap-2">
                 <Button size="sm">Get Started</Button>
               </div>
@@ -28,28 +33,31 @@ export default function Home() {
           <main className="flex flex-col h-full w-full gap-4 px-4 justify-center items-center">
             {/* <h2 className="font-medium text-xl mb-4">Next steps</h2>
             {hasEnvVars ? <SignUpUserSteps /> : <ConnectSupabaseSteps />} */}
-            <div className="w-full flex items-center justify-center">
+            <div className="w-full max-w-sm h-fit">
               <LoginForm />
             </div>
           </main>
         </div>
 
-        <div className="w-full flex items-center justify-center">
-          <p className="text-sm text-muted-foreground text-center">
-            Authentication for LUXIMA
-          </p>
+        <div className="w-full flex flex-col items-center justify-center">
+          <div className="text-sm text-muted-foreground text-center">
+            <TypingText text="Authentication for LUXIMA" />
+          </div>
+          <div className="text-lg font-bold text-primary text-center uppercase tracking-widest">
+            <RotatingText text={["LUXIMA", "Creative", "Studio"]} />
+          </div>
         </div>
 
         <footer className="w-full flex items-center justify-center border-t mx-auto text-center text-xs py-12">
           <p>
             Powered by{" "}
             <a
-              href="https://supabase.com/?utm_source=create-next-app&utm_medium=template&utm_term=nextjs"
+              href="https://luxima.id"
               target="_blank"
-              className="font-bold hover:underline"
+              className="font-bold hover:underline text-primary"
               rel="noreferrer"
             >
-              Supabase
+              LUXIMA.ID
             </a>
           </p>
           <ThemeSwitcher />

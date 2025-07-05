@@ -5,6 +5,7 @@ import { createClient } from "@/lib/supabase/client";
 import { Button } from "@/components/ui/button";
 import {
   Card,
+  CardAction,
   CardContent,
   CardDescription,
   CardHeader,
@@ -15,6 +16,9 @@ import { Label } from "@/components/ui/label";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { UserRound } from "./animate-ui/icons/user-round";
+import { AnimateIcon } from "./animate-ui/icons/icon";
+import { HouseWifi } from "./animate-ui/icons/house-wifi";
 
 export function SignUpForm({
   className,
@@ -63,7 +67,17 @@ export function SignUpForm({
         <CardHeader>
           <CardTitle className="text-2xl">Sign up</CardTitle>
           <CardDescription>Create a new account</CardDescription>
+          <CardAction>
+            <AnimateIcon animateOnHover>
+              <Button asChild size="icon" variant={"ghost"}>
+                <Link href="/">
+                  <HouseWifi />
+                </Link>
+              </Button>
+            </AnimateIcon>
+          </CardAction>
         </CardHeader>
+
         <CardContent>
           <form onSubmit={handleSignUp}>
             <div className="flex flex-col gap-6">
@@ -85,6 +99,7 @@ export function SignUpForm({
                 <Input
                   id="password"
                   type="password"
+                  placeholder="••••••••"
                   required
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
@@ -97,15 +112,19 @@ export function SignUpForm({
                 <Input
                   id="repeat-password"
                   type="password"
+                  placeholder="••••••••"
                   required
                   value={repeatPassword}
                   onChange={(e) => setRepeatPassword(e.target.value)}
                 />
               </div>
               {error && <p className="text-sm text-red-500">{error}</p>}
-              <Button type="submit" className="w-full" disabled={isLoading}>
-                {isLoading ? "Creating an account..." : "Sign up"}
-              </Button>
+              <AnimateIcon animateOnHover>
+                <Button type="submit" className="w-full" disabled={isLoading}>
+                  <UserRound />
+                  {isLoading ? "Creating an account..." : "Sign up"}
+                </Button>
+              </AnimateIcon>
             </div>
             <div className="mt-4 text-center text-sm">
               Already have an account?{" "}

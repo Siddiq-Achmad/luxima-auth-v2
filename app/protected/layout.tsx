@@ -1,9 +1,10 @@
-import { DeployButton } from "@/components/deploy-button";
 import { EnvVarWarning } from "@/components/env-var-warning";
 import { AuthButton } from "@/components/auth-button";
 import { ThemeSwitcher } from "@/components/theme-switcher";
 import { hasEnvVars } from "@/lib/utils";
 import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import { RollingText } from "@/components/animate-ui/text/rolling";
 
 export default function ProtectedLayout({
   children,
@@ -16,9 +17,11 @@ export default function ProtectedLayout({
         <nav className="w-full flex justify-center border-b border-b-foreground/10 h-16">
           <div className="w-full max-w-5xl flex justify-between items-center p-3 px-5 text-sm">
             <div className="flex gap-5 items-center font-semibold">
-              <Link href={"/"}>Next.js Supabase Starter</Link>
+              <Link href={"/"}>
+                <RollingText text="LUXIMA AUTH" />
+              </Link>
               <div className="flex items-center gap-2">
-                <DeployButton />
+                <Button size="sm">Get Started</Button>
               </div>
             </div>
             {!hasEnvVars ? <EnvVarWarning /> : <AuthButton />}
@@ -32,12 +35,12 @@ export default function ProtectedLayout({
           <p>
             Powered by{" "}
             <a
-              href="https://supabase.com/?utm_source=create-next-app&utm_medium=template&utm_term=nextjs"
+              href="https://luxima.id"
               target="_blank"
-              className="font-bold hover:underline"
+              className="font-bold hover:underline text-primary"
               rel="noreferrer"
             >
-              Supabase
+              LUXIMA.ID
             </a>
           </p>
           <ThemeSwitcher />

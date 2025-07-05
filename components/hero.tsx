@@ -2,11 +2,15 @@ import Link from "next/link";
 import { NextLogo } from "./next-logo";
 import { SupabaseLogo } from "./supabase-logo";
 import { ResendLogo } from "./resend-logo";
+import { HighlightText } from "./animate-ui/text/highlight";
+import { WritingText } from "./animate-ui/text/writing";
+
+import { TypingText } from "./animate-ui/text/typing";
 
 export function Hero() {
   return (
-    <div className="flex flex-col gap-16 justify-center items-center w-full h-full">
-      <div className="flex gap-4 md:gap-8 justify-center items-center">
+    <div className="flex flex-col gap-12 justify-center items-center w-full h-full py-8">
+      <div className="flex gap-2 md:gap-8 justify-center items-center">
         <a
           href="https://supabase.com/?utm_source=create-next-app&utm_medium=template&utm_term=nextjs"
           target="_blank"
@@ -28,25 +32,27 @@ export function Hero() {
           <ResendLogo />
         </Link>
       </div>
-      <h1 className="sr-only">Selamat datang di LUXIMA AUTH</h1>
-      <p className="text-3xl lg:text-4xl leading-tight! mx-auto max-w-xl text-center">
-        Authentication for LUXIMA using{" "}
+      <h1 className="text-xl lg:text-2xl font-semibold leading-tight! mx-auto max-w-xl text-center">
+        <TypingText text="Welcome back" /> <HighlightText text="LUXIMA AUTH" />
+      </h1>
+      <p className="text-2xl lg:text-3xl leading-tight! mx-auto max-w-xl text-center">
+        <WritingText text="Authentication for LUXIMA using" />{" "}
         <a
           href="https://supabase.com/"
           target="_blank"
           className="font-bold hover:underline"
           rel="noreferrer"
         >
-          Supabase
+          <TypingText text="Supabase" />
         </a>{" "}
-        and{" "}
+        <WritingText text="and" />{" "}
         <a
           href="https://nextjs.org/"
           target="_blank"
           className="font-bold hover:underline"
           rel="noreferrer"
         >
-          Next.js
+          <TypingText text="Next.js" />
         </a>
       </p>
       <div className="w-full p-px bg-linear-to-r from-transparent via-foreground/10 to-transparent my-8" />

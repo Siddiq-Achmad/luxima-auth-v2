@@ -5,6 +5,7 @@ import { createClient } from "@/lib/supabase/client";
 import { Button } from "@/components/ui/button";
 import {
   Card,
+  CardAction,
   CardContent,
   CardDescription,
   CardHeader,
@@ -15,6 +16,9 @@ import { Label } from "@/components/ui/label";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { LogIn } from "./animate-ui/icons/log-in";
+import { AnimateIcon } from "./animate-ui/icons/icon";
+import { HouseWifi } from "./animate-ui/icons/house-wifi";
 
 export function LoginForm({
   className,
@@ -55,6 +59,15 @@ export function LoginForm({
           <CardDescription>
             Enter your email below to login to your account
           </CardDescription>
+          <CardAction>
+            <AnimateIcon animateOnHover>
+              <Button asChild size="icon" variant={"ghost"}>
+                <Link href="/">
+                  <HouseWifi />
+                </Link>
+              </Button>
+            </AnimateIcon>
+          </CardAction>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleLogin}>
@@ -90,9 +103,12 @@ export function LoginForm({
                 </Link>
               </div>
               {error && <p className="text-sm text-red-500">{error}</p>}
-              <Button type="submit" className="w-full" disabled={isLoading}>
-                {isLoading ? "Logging in..." : "Login"}
-              </Button>
+              <AnimateIcon animateOnHover>
+                <Button type="submit" className="w-full" disabled={isLoading}>
+                  <LogIn />
+                  {isLoading ? "Logging in..." : " Login"}
+                </Button>
+              </AnimateIcon>
             </div>
             <div className="mt-4 text-center text-sm">
               Don&apos;t have an account?{" "}

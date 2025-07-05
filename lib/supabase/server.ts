@@ -17,7 +17,8 @@ export async function createClient() {
             cookiesToSet.forEach(({ name, value, options }) =>
               cookieStore.set(name, value, {
                 ...options,
-                domain: ".luxima.id", // ⬅️ Penting untuk lintas subdomain
+                //domain: ".luxima.id", // ⬅️ Penting untuk lintas subdomain
+                domain: process.env.NODE_ENV === 'production' ? '.luxima.id' : '.localhost',
                 secure: true,         // ⬅️ Wajib jika pakai HTTPS
                 path: "/",
                 sameSite: "lax",
