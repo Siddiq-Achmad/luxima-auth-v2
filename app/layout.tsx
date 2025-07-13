@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Plus_Jakarta_Sans } from "next/font/google";
 import { ThemeProvider } from "next-themes";
 import "./globals.css";
+import Script from "next/script";
 
 const defaultUrl = process.env.VERCEL_URL
   ? `https://${process.env.VERCEL_URL}`
@@ -35,6 +36,11 @@ export default function RootLayout({
         >
           {children}
         </ThemeProvider>
+        <Script
+          defer
+          src="https://stats.luxima.id/script.js"
+          data-website-id="4851ada4-408a-4bd4-8ee6-c5147ed04707"
+        ></Script>
       </body>
     </html>
   );
