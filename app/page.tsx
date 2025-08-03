@@ -13,6 +13,48 @@ import { RotatingText } from "@/components/animate-ui/text/rotating";
 import { Suspense } from "react";
 
 export default function Home() {
+  // const router = useRouter();
+  // const searchParams = useSearchParams();
+  // const supabase = createClient();
+
+  // useEffect(() => {
+  //   const checkSession = async () => {
+  //     const {
+  //       data: { session },
+  //     } = await supabase.auth.getSession();
+
+  //     const redirectTo = searchParams.get("redirectTo");
+
+  //     // Jika sudah login dan ada redirectTo, arahkan
+  //     if (session && redirectTo) {
+  //       try {
+  //         const url = decodeURIComponent(redirectTo);
+  //         const parsed = new URL(url);
+
+  //         // Optional: validasi domain redirect agar aman
+  //         const allowedHosts = [
+  //           "localhost:3000",
+  //           "app.luxima.id",
+  //           "admin.luxima.id",
+  //           "dash.luxima.id",
+  //           "billing.luxima.id",
+  //           "api.luxima.id",
+  //           "payment.luxima.id",
+  //         ];
+  //         if (allowedHosts.includes(parsed.host)) {
+  //           router.push(url);
+  //           return;
+  //         }
+  //       } catch (e) {
+  //         console.error("Invalid redirectTo URL");
+  //       }
+  //     }
+
+  //     // Jika tidak ada session, tetap tampilkan halaman login (jangan redirect)
+  //   };
+
+  //   checkSession();
+  // }, [router, searchParams, supabase]);
   return (
     <main className="min-h-screen flex flex-col items-center">
       <div className="flex-1 w-full flex flex-col gap-20 items-center">
@@ -22,7 +64,7 @@ export default function Home() {
               <Link href={"/"}>
                 <RollingText text="LUXIMA AUTH" />
               </Link>
-              <div className="flex items-center gap-2">
+              <div className="hidden lg:flex items-center gap-2">
                 <Button size="sm">Get Started</Button>
               </div>
             </div>
