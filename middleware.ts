@@ -3,35 +3,35 @@ import { NextResponse, NextRequest } from "next/server";
 
 export async function middleware(request: NextRequest) {
   const response = await updateSession(request);
-  const supabaseToken = request.cookies.get("sb-access-token")?.value;
+
   const redirectTo = request.nextUrl.searchParams.get("redirectTo");
 
   // ✅ Jika sudah login
-  if (supabaseToken) {
-    if (redirectTo) {
-      try {
-        const url = new URL(decodeURIComponent(redirectTo));
-        const allowedHosts = [
-          "localhost:3000",
-          "app.luxima.id",
-          "admin.luxima.id",
-          "dash.luxima.id",
-          "billing.luxima.id",
-          "api.luxima.id",
-          "payment.luxima.id",
-          "luxima.id",
-        ];
-        if (allowedHosts.includes(url.host)) {
-          return NextResponse.redirect(url.href);
-        }
-      } catch {
-        console.warn("Invalid redirectTo param");
-      }
-    }
 
-    // Tanpa redirectTo → langsung ke app
-    return NextResponse.redirect("https://dash.luxima.id");
+  if (redirectTo) {
+    try {
+      const url = new URL(decodeURIComponent(redirectTo));
+      const allowedHosts = [
+        "localhost:3000",
+        "app.luxima.id",
+        "admin.luxima.id",
+        "dash.luxima.id",
+        "billing.luxima.id",
+        "api.luxima.id",
+        "payment.luxima.id",
+        "studio.luxima.id",
+        "luxima.id",
+      ];
+      if (allowedHosts.includes(url.host)) {
+        return NextResponse.redirect(url.href);
+      }
+    } catch {
+      console.warn("Invalid redirectTo param");
+    }
   }
+
+  // Tanpa redirectTo → langsung ke app
+  return NextResponse.redirect("https://dash.luxima.id");
 
   // ✅ Jika belum login, tetap di halaman login
   return response;
