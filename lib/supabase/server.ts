@@ -10,7 +10,8 @@ export async function createClient() {
     {
       cookieOptions: {
         name: "sb-luxima-auth-token",
-        domain: ".luxima.id",
+        domain:
+          process.env.NODE_ENV === "development" ? ".localhost" : ".luxima.id",
         secure: true,
         path: "/",
         sameSite: "lax",
@@ -24,8 +25,11 @@ export async function createClient() {
             cookiesToSet.forEach(({ name, value, options }) =>
               cookieStore.set(name, value, {
                 ...options,
-                domain: ".luxima.id", // ⬅️ Penting untuk lintas subdomain
-                //domain: process.env.NODE_ENV === 'production' ? '.luxima.id' : '.localhost',
+                //domain: ".luxima.id", // ⬅️ Penting untuk lintas subdomain
+                domain:
+                  process.env.NODE_ENV === "development"
+                    ? ".localhost"
+                    : ".luxima.id",
                 secure: true, // ⬅️ Wajib jika pakai HTTPS
                 path: "/",
                 sameSite: "lax",

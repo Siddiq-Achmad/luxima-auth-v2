@@ -7,7 +7,8 @@ export function createClient() {
     {
       cookieOptions: {
         name: "sb-luxima-auth-token",
-        domain: ".luxima.id",
+        domain:
+          process.env.NODE_ENV === "development" ? ".localhost" : ".luxima.id",
         secure: true,
         path: "/",
         sameSite: "lax",

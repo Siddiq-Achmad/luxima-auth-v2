@@ -13,6 +13,11 @@ export async function middleware(request: NextRequest) {
         const url = new URL(decodeURIComponent(redirectTo));
         const allowedHosts = [
           "localhost:3000",
+          "localhost:3001",
+          "localhost:3002",
+          "localhost:3003",
+          "localhost:3004",
+          "localhost:3005",
           "app.luxima.id",
           "admin.luxima.id",
           "dash.luxima.id",
@@ -31,7 +36,11 @@ export async function middleware(request: NextRequest) {
     }
 
     // Tanpa redirectTo → langsung ke app
-    return NextResponse.redirect("https://dash.luxima.id");
+    return NextResponse.redirect(
+      process.env.NODE_ENV === "development"
+        ? "http://localhost:3000"
+        : "https://app.luxima.id"
+    );
   }
 
   // ✅ Jika belum login, tetap di halaman login
