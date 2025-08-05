@@ -21,11 +21,7 @@ export default function ProtectedLayout({
                 <RollingText text="LUXIMA AUTH" />
               </Link>
               <div className="flex items-center gap-2">
-                <Button size="sm">
-                  <Link href="/account" className="button">
-                    Account
-                  </Link>
-                </Button>
+                <Button size="sm">Account</Button>
               </div>
             </div>
             {!hasEnvVars ? <EnvVarWarning /> : <AuthButton />}

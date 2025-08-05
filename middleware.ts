@@ -36,11 +36,12 @@ export async function middleware(request: NextRequest) {
     }
 
     // Tanpa redirectTo → langsung ke app
-    return NextResponse.redirect(
-      process.env.NODE_ENV === "development"
-        ? "http://localhost:3000"
-        : "https://app.luxima.id"
-    );
+
+    // return NextResponse.redirect(
+    //   process.env.NODE_ENV === "development"
+    //     ? "http://localhost:3000"
+    //     : "https://app.luxima.id"
+    // );
   }
 
   // ✅ Jika belum login, tetap di halaman login
