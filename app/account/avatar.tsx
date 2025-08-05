@@ -4,7 +4,6 @@ import { createClient } from "@/lib/supabase/client";
 import Image from "next/image";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Button } from "@/components/ui/button";
 
 export default function Avatar({
   uid,
@@ -65,7 +64,7 @@ export default function Avatar({
 
       onUpload(filePath);
     } catch (error) {
-      alert("Error uploading avatar!");
+      alert("Error uploading avatar!" + error);
     } finally {
       setUploading(false);
     }
