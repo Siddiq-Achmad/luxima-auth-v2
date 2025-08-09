@@ -7,6 +7,7 @@ import { Separator } from "@radix-ui/react-dropdown-menu";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { toast } from "sonner";
 
 // ...
 
@@ -24,13 +25,13 @@ export default function AccountForm({ user }: { user: User | null }) {
 
       const { data, error, status } = await supabase
         .from("profiles")
-        .select(`full_name, username, website, avatar_url`)
+        .select(`full_name, username, website, avatar_url, status ,system_role`)
         .eq("id", user?.id)
         .single();
 
       if (error && status !== 406) {
         console.log(error);
-        throw error;
+        throw error.message;
       }
 
       if (data) {
@@ -38,9 +39,16 @@ export default function AccountForm({ user }: { user: User | null }) {
         setUsername(data.username);
         setWebsite(data.website);
         setAvatarUrl(data.avatar_url);
+
+        toast.success("Welcome back, " + data.full_name, {
+          description: "System Role : " + data.system_role.toUpperCase(),
+        });
       }
     } catch (error) {
-      alert("Error loading user data!" + error);
+      toast.error("Error loading user data!", {
+        description: "Error: " + error,
+      });
+      //alert("Error loading user data!" + error);
     } finally {
       setLoading(false);
     }
@@ -71,17 +79,21 @@ export default function AccountForm({ user }: { user: User | null }) {
         avatar_url,
         updated_at: new Date().toISOString(),
       });
-      if (error) throw error;
-      alert("Profile updated!");
+      if (error) throw error.message;
+      //alert("Profile updated!");
+      toast.success("Profile updated!");
     } catch (error) {
-      alert("Error updating the data!" + error);
+      //alert("Error updating the data!" + error);
+      toast.error("Error updating the data!", {
+        description: "Error : " + error,
+      });
     } finally {
       setLoading(false);
     }
   }
 
   return (
-    <div className="form-widget w-full">
+    <div className="form-widget flex flex-col w-full">
       {/* ... */}
       <div className="flex flex-col gap-2 justify-center items-center mb-8 ">
         <Avatar
@@ -94,12 +106,12 @@ export default function AccountForm({ user }: { user: User | null }) {
           }}
         />
       </div>
-      <div className="grid gap-2 mb-4">
-        <div className="grid w-full max-w-md items-center gap-3">
+      <div className="flex flex-col w-full gap-2 mb-4 justify-center items-center">
+        <div className="grid w-full max-w-sm lg:max-w-md items-center gap-3">
           <Label htmlFor="email">Email</Label>
           <Input id="email" type="text" value={user?.email} disabled />
         </div>
-        <div className="grid w-full max-w-md items-center gap-3">
+        <div className="grid w-full max-w-sm lg:max-w-md items-center gap-3">
           <Label htmlFor="fullName">Full Name</Label>
           <Input
             id="fullName"
@@ -108,7 +120,7 @@ export default function AccountForm({ user }: { user: User | null }) {
             onChange={(e) => setFullname(e.target.value)}
           />
         </div>
-        <div className="grid w-full max-w-md items-center gap-3">
+        <div className="grid w-full max-w-sm lg:max-w-md items-center gap-3">
           <Label htmlFor="username">Username</Label>
           <Input
             id="username"
@@ -117,7 +129,7 @@ export default function AccountForm({ user }: { user: User | null }) {
             onChange={(e) => setUsername(e.target.value)}
           />
         </div>
-        <div className="grid w-full max-w-md items-center gap-3">
+        <div className="grid w-full max-w-sm lg:max-w-md items-center gap-3">
           <Label htmlFor="website">Website</Label>
           <Input
             id="website"
@@ -127,7 +139,7 @@ export default function AccountForm({ user }: { user: User | null }) {
           />
         </div>
 
-        <div className="mb-4 grid w-full max-w-md items-center gap-3 mt-4">
+        <div className="mb-4 grid w-full max-w-sm lg:max-w-md items-center gap-3 mt-4">
           <Button
             className="button primary block"
             onClick={() =>
@@ -140,7 +152,7 @@ export default function AccountForm({ user }: { user: User | null }) {
         </div>
       </div>
       <Separator />
-      {/* <div className="mb-4 grid w-full max-w-md items-end gap-3">
+      {/* <div className="mb-4 grid w-full max-w-sm lg:max-w-md items-end gap-3">
         <form action="/auth/signout" method="post">
           <Button
             className="button block"

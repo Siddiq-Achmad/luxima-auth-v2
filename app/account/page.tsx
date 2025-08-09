@@ -1,5 +1,16 @@
+import { Suspense } from "react";
 import AccountForm from "./account-form";
 import { createClient } from "@/lib/supabase/server";
+
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+  CardAction,
+  CardContent,
+} from "@/components/ui/card";
+import { User } from "lucide-react";
 
 export default async function Account() {
   const supabase = await createClient();
@@ -9,10 +20,19 @@ export default async function Account() {
   } = await supabase.auth.getUser();
 
   return (
-    <div className="flex min-h-[calc(40vh-3.5rem)] min-w-lg w-full items-center justify-center p-6 md:p-10">
-      <div className="w-full max-w-md">
-        <AccountForm user={user} />
-      </div>
-    </div>
+    <Card className="w-full max-w-md m-4">
+      <CardHeader>
+        <CardTitle>Account Profile</CardTitle>
+        <CardDescription>View and update your account details</CardDescription>
+        <CardAction>
+          <User className="mr-2 text-primary" />
+        </CardAction>
+      </CardHeader>
+      <CardContent>
+        <Suspense fallback={<div>Loading...</div>}>
+          <AccountForm user={user} />
+        </Suspense>
+      </CardContent>
+    </Card>
   );
 }

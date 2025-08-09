@@ -20,14 +20,14 @@ export default function ProtectedLayout({
               <Link href={"/"}>
                 <RollingText text="LUXIMA AUTH" />
               </Link>
-              <div className="flex items-center gap-2">
+              <div className="hidden md:flex items-center gap-2">
                 <Button size="sm">Account</Button>
               </div>
             </div>
             {!hasEnvVars ? <EnvVarWarning /> : <AuthButton />}
           </div>
         </nav>
-        <div className="flex-1 flex flex-col gap-20 max-w-5xl p-5">
+        <div className="w-full h-full flex justify-center items-center  ">
           {children}
         </div>
 

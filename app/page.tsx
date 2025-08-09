@@ -12,49 +12,44 @@ import { TypingText } from "@/components/animate-ui/text/typing";
 import { RotatingText } from "@/components/animate-ui/text/rotating";
 import { Suspense } from "react";
 
-export default function Home() {
-  // const router = useRouter();
-  // const searchParams = useSearchParams();
-  // const supabase = createClient();
+import { createClient } from "@/lib/supabase/server";
 
-  // useEffect(() => {
-  //   const checkSession = async () => {
-  //     const {
-  //       data: { session },
-  //     } = await supabase.auth.getSession();
+import ProfileCard from "@/app/account/profile-card";
 
-  //     const redirectTo = searchParams.get("redirectTo");
+import { LuximaLogo } from "@/components/luxima-logo";
+import { redirect } from "next/navigation";
+export default async function Home() {
+  const supabase = await createClient();
 
-  //     // Jika sudah login dan ada redirectTo, arahkan
-  //     if (session && redirectTo) {
-  //       try {
-  //         const url = decodeURIComponent(redirectTo);
-  //         const parsed = new URL(url);
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
 
-  //         // Optional: validasi domain redirect agar aman
-  //         const allowedHosts = [
-  //           "localhost:3000",
-  //           "app.luxima.id",
-  //           "admin.luxima.id",
-  //           "dash.luxima.id",
-  //           "billing.luxima.id",
-  //           "api.luxima.id",
-  //           "payment.luxima.id",
-  //         ];
-  //         if (allowedHosts.includes(parsed.host)) {
-  //           router.push(url);
-  //           return;
-  //         }
-  //       } catch (e) {
-  //         console.error("Invalid redirectTo URL");
-  //       }
-  //     }
+  // if (user && process.env.NODE_ENV === "development") {
+  //   redirect("http://localhost:3000");
+  // }
 
-  //     // Jika tidak ada session, tetap tampilkan halaman login (jangan redirect)
-  //   };
+  const { data: profile, error } = await supabase
+    .from("profiles")
+    .select("*")
+    .eq("id", user?.id)
+    .single();
 
-  //   checkSession();
-  // }, [router, searchParams, supabase]);
+  const role = profile?.system_role;
+
+  if (error) {
+    console.error("Error fetching profile:", error.message);
+  } else {
+    //console.log("User profile:", profile);
+    if (role === "admin" || role === "superadmin") {
+      redirect("https://admin.luxima.id");
+    } else if (role === "user") {
+      redirect("https://app.luxima.id");
+    } else {
+      redirect("https://dash.luxima.id");
+    }
+  }
+
   return (
     <main className="min-h-screen flex flex-col items-center">
       <div className="flex-1 w-full flex flex-col gap-20 items-center">
@@ -65,23 +60,89 @@ export default function Home() {
                 <RollingText text="LUXIMA AUTH" />
               </Link>
               <div className="hidden lg:flex items-center gap-2">
-                <Button size="sm">Get Started</Button>
+                {user ? (
+                  <Button size="sm">
+                    <Link href="/account" className="button">
+                      Account
+                    </Link>
+                  </Button>
+                ) : (
+                  <Button size="sm">
+                    <Link href="/auth/login" className="button">
+                      Get Started
+                    </Link>
+                  </Button>
+                )}
               </div>
             </div>
             {!hasEnvVars ? <EnvVarWarning /> : <AuthButton />}
           </div>
         </nav>
-        <div className="grid grid-cols-1 md:grid-cols-2 min-h-[calc(100vh-28rem)] gap-20 max-w-5xl p-4 justify-center items-center">
-          <Hero />
+        <div className="grid grid-cols-1 md:grid-cols-2 min-h-[calc(100vh-28rem)] gap-24 max-w-5xl p-4 justify-center items-center">
+          <div className="flex md:hidden justify-center items-center">
+            <Link
+              href="https://luxima.id"
+              className="flex gap-4 items-end justify-between"
+            >
+              <LuximaLogo />{" "}
+              <span className="text-2xl lg:text-3xl font-semibold">AUTH</span>
+            </Link>
+          </div>
           <main className="flex flex-col h-full w-full gap-4 px-4 justify-center items-center">
-            {/* <h2 className="font-medium text-xl mb-4">Next steps</h2>
-            {hasEnvVars ? <SignUpUserSteps /> : <ConnectSupabaseSteps />} */}
-            <div className="w-full max-w-sm h-fit">
+            <div className="w-full max-w-sm h-fit gap-4 flex flex-col justify-between">
               <Suspense fallback={<div>Loading...</div>}>
-                <LoginForm />
+                {/* {user ? <AccountForm user={user} /> : <LoginForm />} */}
+                {user ? <ProfileCard user={user} /> : <LoginForm />}
               </Suspense>
+
+              {user && (
+                <div className="m-4 gap-2 flex flex-col">
+                  {role === "admin" ||
+                    (role === "superadmin" && (
+                      <>
+                        <Link
+                          href="https://admin.luxima.id"
+                          rel="noreferrer"
+                          className="flex gap-2 items-center justify-center font-bold text-xl"
+                        >
+                          <Button className="w-sm">Admin Panel</Button>
+                        </Link>
+                        <Link
+                          href="https://billing.luxima.id"
+                          rel="noreferrer"
+                          className="flex gap-2 items-center justify-center font-bold text-xl"
+                        >
+                          <Button className="w-sm">Billing Dashboard</Button>
+                        </Link>
+                        <Link
+                          href="https://payment.luxima.id"
+                          rel="noreferrer"
+                          className="flex gap-2 items-center justify-center font-bold text-xl"
+                        >
+                          <Button className="w-sm">Payment Dashboard</Button>
+                        </Link>
+                      </>
+                    ))}
+
+                  <Link
+                    href="https://dash.luxima.id"
+                    rel="noreferrer"
+                    className="flex gap-2 items-center justify-center font-bold text-xl"
+                  >
+                    <Button className="w-sm">Dashboard</Button>
+                  </Link>
+                  <Link
+                    href="https://app.luxima.id"
+                    rel="noreferrer"
+                    className="flex gap-2 items-center justify-center font-bold text-xl"
+                  >
+                    <Button className="w-sm">Apps Listing & Directory</Button>
+                  </Link>
+                </div>
+              )}
             </div>
           </main>
+          <Hero />
         </div>
 
         <div className="w-full flex flex-col items-center justify-center">

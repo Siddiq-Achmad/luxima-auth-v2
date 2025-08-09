@@ -8,6 +8,7 @@ import {
   CardAction,
   CardContent,
   CardDescription,
+  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
@@ -19,6 +20,10 @@ import { useState } from "react";
 import { LogIn } from "./animate-ui/icons/log-in";
 import { AnimateIcon } from "./animate-ui/icons/icon";
 import { HouseWifi } from "./animate-ui/icons/house-wifi";
+import { Separator } from "@/components/ui/separator";
+import { AiOutlineGithub } from "react-icons/ai";
+import { FcGoogle } from "react-icons/fc";
+import { toast } from "sonner";
 
 export function LoginForm({
   className,
@@ -30,6 +35,25 @@ export function LoginForm({
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
   const searchParams = useSearchParams();
+
+  const handleGithubLogin = async () => {
+    toast.error("Coming soon!", {
+      description: "Under development.",
+    });
+  };
+
+  const handleGoogleLogin = async () => {
+    // const supabase = createClient();
+    // await supabase.auth.signInWithOAuth({
+    //   provider: "google",
+    //   options: {
+    //     redirectTo: `${window.location.origin}/protected`,
+    //   },
+    // });
+    toast.error("Coming soon!", {
+      description: "Under development.",
+    });
+  };
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -58,9 +82,9 @@ export function LoginForm({
 
       // Redirect ke asal
       if (process.env.NODE_ENV === "development") {
-        router.push(redirectTo || "/protected");
+        router.push(redirectTo || "/account");
       } else {
-        router.push(safeRedirect || "/protected");
+        router.push(safeRedirect || "/account");
       }
     } catch (error: unknown) {
       setError(error instanceof Error ? error.message : "An error occurred");
@@ -139,6 +163,36 @@ export function LoginForm({
             </div>
           </form>
         </CardContent>
+        <CardFooter className="flex flex-col">
+          <Separator className="my-4" />
+          <div className="flex h-5 items-center space-x-4 text-sm">
+            <AnimateIcon animateOnHover>
+              <Button
+                size="sm"
+                variant={"secondary"}
+                onClick={() => {
+                  handleGithubLogin();
+                }}
+              >
+                <AiOutlineGithub />
+                Login with GitHub
+              </Button>
+            </AnimateIcon>
+            <Separator orientation="vertical" />
+            <AnimateIcon animateOnHover>
+              <Button
+                size="sm"
+                variant={"secondary"}
+                onClick={() => {
+                  handleGoogleLogin();
+                }}
+              >
+                <FcGoogle />
+                Login with Google
+              </Button>
+            </AnimateIcon>
+          </div>
+        </CardFooter>
       </Card>
     </div>
   );

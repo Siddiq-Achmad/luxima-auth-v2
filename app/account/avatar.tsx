@@ -87,9 +87,9 @@ export default function Avatar({
           style={{ height: size, width: size }}
         />
       )}
-      <div style={{ width: size }}>
+      <div style={{ width: size }} className="flex justify-center mt-2">
         <Label
-          className="button primary block w-24 h-max text-center "
+          className="button primary block w-24 h-auto p-2 text-center bg-primary text-primary-foreground justify-center items-center rounded-md text-sm font-semibold hover:bg-primary/80 disabled:cursor-not-allowed disabled:opacity-50"
           htmlFor="single"
         >
           {uploading ? "Uploading ..." : "Upload"}
